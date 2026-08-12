@@ -1,4 +1,5 @@
 import { Heart, BookOpen, Users, Shield, Star, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Home() {
   const services = [
@@ -6,21 +7,25 @@ export default function Home() {
       title: 'Infant Care',
       description: 'A safe, warm, and stimulating environment with gentle routines, sensory play, and responsive caregiving for our youngest children.',
       icon: Heart,
+      image: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&q=80',
     },
     {
       title: 'Toddler Program',
       description: 'Encouraging curiosity and independence through hands-on activities, creative expression, and early learning concepts.',
       icon: Users,
+      image: 'https://images.unsplash.com/photo-1587654780291-39c940171106?w=600&q=80',
     },
     {
       title: 'Preschool Education',
       description: 'Preparing children for kindergarten with a fun curriculum focused on literacy, numeracy, science, and social studies.',
       icon: BookOpen,
+      image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80',
     },
     {
       title: 'After Care & Tutoring',
       description: 'Supportive after-school care with homework assistance and private tutoring in Math and English Language Arts.',
       icon: Star,
+      image: 'https://images.unsplash.com/photo-1577896851221-b9272768d459?w=600&q=80',
     },
   ];
 
@@ -41,11 +46,23 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative bg-navy-950 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-navy-800/40 via-transparent to-transparent"></div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+      {/* Hero Section with Video */}
+      <section className="relative bg-navy-950 text-white overflow-hidden min-h-[90vh] flex items-center">
+        {/* Background Video */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/hero-video.mp4" type="video/mp4" />
+        </video>
+
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-navy-950/75"></div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 z-10">
           <div className="max-w-3xl">
             <p className="text-accent-red font-semibold tracking-wide uppercase text-sm mb-4">
               Brooklyn, New York
@@ -55,7 +72,7 @@ export default function Home() {
               <span className="text-white">New Vision</span>{' '}
               <span className="text-accent-red">Daycare</span>
             </h1>
-            <p className="text-lg md:text-xl text-navy-200 mb-10 leading-relaxed">
+            <p className="text-lg md:text-xl text-navy-100 mb-10 leading-relaxed">
               A nurturing Christian-based group family daycare dedicated to raising children with love, faith, and excellence in a safe and stimulating environment.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -93,24 +110,34 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-6">
-              {values.map((item, index) => (
-                <div
-                  key={index}
-                  className="bg-navy-50 rounded-2xl p-6 border border-navy-100 hover:shadow-md transition"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="bg-navy-800 text-white w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 font-bold">
-                      {index + 1}
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-navy-900 text-lg mb-1">{item.title}</h3>
-                      <p className="text-gray-600 text-sm">{item.description}</p>
-                    </div>
+            <div className="relative h-80 md:h-full min-h-[320px] rounded-2xl overflow-hidden shadow-xl">
+              <Image
+                src="https://images.unsplash.com/photo-1587654780291-39c940171106?w=800&q=80"
+                alt="Children learning and playing in daycare"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-14">
+            {values.map((item, index) => (
+              <div
+                key={index}
+                className="bg-navy-50 rounded-2xl p-6 border border-navy-100 hover:shadow-md transition"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="bg-navy-800 text-white w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 font-bold">
+                    {index + 1}
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-navy-900 text-lg mb-1">{item.title}</h3>
+                    <p className="text-gray-600 text-sm">{item.description}</p>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -133,13 +160,24 @@ export default function Home() {
               return (
                 <div
                   key={index}
-                  className="bg-white rounded-2xl p-7 shadow-sm hover:shadow-xl transition duration-300 border border-gray-100 group"
+                  className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 border border-gray-100 group"
                 >
-                  <div className="bg-navy-100 group-hover:bg-accent-red text-navy-800 group-hover:text-white w-14 h-14 rounded-xl flex items-center justify-center mb-5 transition duration-300">
-                    <Icon size={26} />
+                  <div className="relative h-44 overflow-hidden">
+                    <Image
+                      src={service.image}
+                      alt={service.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition duration-500"
+                      sizes="(max-width: 640px) 100vw, 25vw"
+                    />
                   </div>
-                  <h3 className="font-bold text-navy-900 text-xl mb-3">{service.title}</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">{service.description}</p>
+                  <div className="p-6">
+                    <div className="bg-navy-100 group-hover:bg-accent-red text-navy-800 group-hover:text-white w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition duration-300">
+                      <Icon size={22} />
+                    </div>
+                    <h3 className="font-bold text-navy-900 text-xl mb-2">{service.title}</h3>
+                    <p className="text-gray-600 text-sm leading-relaxed">{service.description}</p>
+                  </div>
                 </div>
               );
             })}
